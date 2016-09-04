@@ -1,5 +1,10 @@
-<h1><%= @post.title %></h1>
-<p>
-<%= @post.content %>
-</p>
+<!--<h1>Show Page</h1>
+<hr>-->
+<%= render 'shared/title', title: "Show Page" %>
+  <p>
+    <%= @post.title %>
+  </p>
+  <p>
+    <%= @post.content %>
+  </p>
 <%= link_to 'go back to all posts', posts_path %>

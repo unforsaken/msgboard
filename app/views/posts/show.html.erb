@@ -1,10 +1,13 @@
 <!--<h1>Show Page</h1>
 <hr>-->
 <%= render 'shared/title', title: "Show Page" %>
-  <p>
-    <%= @post.title %>
-  </p>
-  <p>
-    <%= @post.content %>
-  </p>
-<%= link_to 'go back to all posts', posts_path %>
+  <div class "row">
+    <div class="col-md-8 well">
+      <h3><%= @post.title%></h3>
+      <p>
+        <%= @post.content%>
+      </p>
+      <p><%= link_to 'go back to all posts', posts_path %></p>
+    </div>
+  </div>
+

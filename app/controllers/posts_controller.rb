@@ -12,14 +12,15 @@ class PostsController <ApplicationController
 	end
 	def create
 		post = Post.new(post_params)
-
+		post.user = current_user
+		
 		if post.save!
 			#redirect_to new_post_path
     	redirect_to posts_path
     	#render :index
   	else
     	render :new
-  end
+  	end
 	end
 
 	private

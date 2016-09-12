@@ -2,13 +2,15 @@
 <hr>-->
 
 <div class ="container">
-<%= render 'shared/title', title: "Show Page" %>
+<%= render 'shared/title', title: "#{@post.title}"%>
   <div class =row>
     <div class="col-md-8 well">
       <h3><%= @post.title%></h3>
       <p>
         <%= @post.content%>
       </p>
+      <br>
+      <small>posted by </small><%= " #{@post.user.name}" %>
     </div>
   </div>
 
@@ -20,21 +22,25 @@
       <p>
         <%= comment.content %>
       </p>
+      <br>
+      <small>commented by </small><%= "#{comment.user.name}" %>
     </div>
   </div>
 <% end %>
 
-<h4>Leave a comment:</h4>
-<%= form_for [@post, @comment] do |f| %>  
-  <div class="row">
-    <%= f.text_area :content, rows: 3, class: 'col-md-4',required: true %>
-      <div class="col-md-2">
-        <p><%= f.submit 'Create Comment', class: 'btn btn-success btn-md' %></p>
-        <p><%= f.submit 'Clear Comment', :type => "reset", class: 'btn btn-danger btn-md' %></p>
-      </div>
-  </div>
-<% end %>
 
+<% if logged_in? %>
+  <h4>Leave a comment:</h4>
+  <%= form_for [@post, @comment] do |f| %>  
+    <div class="row">
+      <%= f.text_area :content, rows: 3, class: 'col-md-4',required: true %>
+        <div class="col-md-2">
+          <p><%= f.submit 'Create Comment', class: 'btn btn-success btn-md' %></p>
+          <p><%= f.submit 'Clear Comment', :type => "reset", class: 'btn btn-danger btn-md' %></p>
+        </div>
+    </div>
+  <% end %>
+<% end %>
 <p><%= link_to 'go back to all posts', posts_path %></p>
 
 </div>

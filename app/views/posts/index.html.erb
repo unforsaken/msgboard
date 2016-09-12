@@ -4,7 +4,9 @@
 <%= render 'shared/title', title: "Welcome to the Message Board" %>
 <ul class="nav nav-pills">
   <li role="presentation" class="active"><%= link_to "All Posts", posts_path %></li>
+  <% if logged_in? %>
   <li role="presentation"><%= link_to "My Posts & Comments", user_path(current_user) %></li>
+  <% end %>
 </ul><br>
 
 	<% @posts.each do |post| %>

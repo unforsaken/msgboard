@@ -5,6 +5,7 @@
 <%= render 'shared/title', title: "#{@post.title}"%>
   <div class =row>
     <div class="col-md-8 well">
+      <%= render partial: "categories/category", collection: @post.categories %>
       <h3><%= @post.title%></h3>
       <p>
         <%= @post.content%>
@@ -16,13 +17,28 @@
 
 <h4>All Comments:</h4>
 
-<% @post.comments.each do |comment| %>
+<% @comments.each do |comment| %>
   <div class="row">
+   <div class='col-md-1 well text-center'>
+      <% if logged_in? %>
+        <%= link_to vote_post_comment_path(@post, comment, vote: true), class: "btn btn-primary btn-block text-center", method: 'post' do %>
+          Like
+        <% end %>
+        <%= link_to vote_post_comment_path(@post, comment, vote: false), class: "btn btn-danger btn-block text-center", method: 'post' do %>
+          Hate
+        <% end %>
+      <% end %>
+    <% if comment.total_votes>=0 %>
+      <%= comment.total_votes %> Likes
+    <% else %>
+      <%= comment.total_votes*-1 %> Hates
+    <% end %>
+    </div>
     <div class="col-md-6 well">
       <p>
         <%= comment.content %>
       </p>
-      <br>
+      <br><br>
       <small>commented by </small><%= "#{comment.user.name}" %>
     </div>
   </div>

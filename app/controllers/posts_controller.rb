@@ -1,11 +1,12 @@
 class PostsController <ApplicationController
 	def index
-		@posts = Post.all
+		@posts = Post.all.sort_by {|x| x.total_votes }.reverse
 	end
+	
 	def show
 		@post = Post.find(params[:id])
 		@comment = Comment.new
-		@comments = @post.comments
+		@comments = @post.comments.all.sort_by {|x| x.total_votes }.reverse
 	end
 	def new
 		@post = Post.new
@@ -18,15 +19,28 @@ class PostsController <ApplicationController
 			#redirect_to new_post_path
     	redirect_to posts_path
     	#render :index
-  	else
+  		else
     	render :new
-  	end
+    	end
 	end
+
+	def vote
+    @post = Post.find(params[:id])
+    @vote = Vote.create(voteable: @post, creator: current_user, vote: params[:vote])
+
+    if @vote.valid?
+      flash[:success] = 'Your vote was counted!'
+    else
+      flash[:error] = "You can only vote for #{@post.title} once!"
+    end
+
+    redirect_to :back
+  	end
 
 	private
 
 	def post_params
 		#binding.pry
-		params.require(:post).permit(:title, :content)
+		params.require(:post).permit(:title, :content, category_ids: [])
 	end
 end

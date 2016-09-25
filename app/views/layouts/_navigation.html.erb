@@ -6,7 +6,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if logged_in? %>
-          <li><%= link_to "Welcome! #{current_user.name}"%></li>
           <li><%= link_to 'New Post', new_post_path %></li>
         <% else %>
           <li><%= link_to 'Register', register_path %></li>
@@ -16,7 +15,7 @@
         <% if logged_in? %>
           <li class="dropdown">
             <%= link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do %>
-            <%= current_user.name %> <span class='caret'></span>
+            <%= "Welcome! #{current_user.name}" %> <span class='caret'></span>
             <% end %>
             <ul class="dropdown-menu">
               <li><%= link_to 'User Profile', user_path(current_user) %></li>

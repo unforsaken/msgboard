@@ -11,12 +11,26 @@ post '/login', to: 'sessions#create'
 get '/logout', to: 'sessions#destroy'
 
 resources :users, only: [:new, :create, :edit, :update, :show]
+
+resources :categories, only: [:index, :new, :create]
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 root 'posts#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
+resources :posts, except: [:destroy] do
+    member do # 客製化連結
+      post :vote
+      # 這樣會產出 posts/1/vote
+    end
 
+    resources :comments, only: [:create, :show] do
+      member do
+        post :vote
+        # 產出 posts/1/comments/1/vote
+      end
+    end
+end
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
